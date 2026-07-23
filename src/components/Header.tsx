@@ -19,9 +19,9 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-40 bg-white border-b-0">
-        <div className="mx-auto max-w-2xl px-5 flex items-center justify-between h-14">
-          <Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC400] rounded-sm" aria-label="NeedItz home">
-            <Logo />
+        <div className="mx-auto max-w-2xl px-5 flex items-center justify-between h-16 sm:h-[72px]">
+          <Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC400] rounded-sm" aria-label="Needitz home">
+            <Logo size="text-[32px] sm:text-[38px]" />
           </Link>
           <button
             onClick={() => setOpen(true)}
