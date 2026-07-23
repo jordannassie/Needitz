@@ -8,3 +8,7 @@
 [build.environment]
   NODE_VERSION = "20"
   NPM_VERSION = "10"
+
+# Allow the AI analysis route sufficient time for web research + model calls
+[functions]
+  timeout = 90

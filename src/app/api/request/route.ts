@@ -6,6 +6,7 @@ import { sanitizeRecord } from "@/lib/sanitize";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { saveLead } from "@/lib/leadsStore";
 import type { Lead } from "@/types/lead";
+import { defaultLeadExtensions } from "@/types/lead";
 
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 15 * 60 * 1000; // 15 min per IP
@@ -68,6 +69,7 @@ export async function POST(req: NextRequest) {
     createdAt: now,
     updatedAt: now,
     internalNotes: "",
+    ...defaultLeadExtensions(),
   };
 
   try {

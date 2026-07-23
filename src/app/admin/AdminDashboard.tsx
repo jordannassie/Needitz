@@ -13,6 +13,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { AiReportCard } from "./AiReportCard";
 
 const STATUS_LABELS: Record<LeadStatus, string> = {
   new: "New",
@@ -74,6 +75,11 @@ export function AdminDashboard() {
     router.push("/admin/login");
   }
 
+  /** Replace a single lead in state (used by all patch/update operations) */
+  function updateLeadInState(updated: Lead) {
+    setLeads((prev) => prev.map((l) => (l.id === updated.id ? updated : l)));
+  }
+
   async function patchLead(id: string, patch: Partial<Lead>) {
     try {
       const res = await fetch(`/api/admin/leads/${id}`, {
@@ -83,7 +89,7 @@ export function AdminDashboard() {
       });
       if (res.ok) {
         const { lead } = (await res.json()) as { lead: Lead };
-        setLeads((prev) => prev.map((l) => (l.id === id ? lead : l)));
+        updateLeadInState(lead);
       }
     } catch { /* noop */ }
   }
@@ -106,13 +112,13 @@ export function AdminDashboard() {
     <div className="min-h-screen bg-[#F7F7F7]">
       {/* Header */}
       <header className="bg-white border-b border-[#D8D8D8] sticky top-0 z-30">
-        <div className="max-w-4xl mx-auto px-5 h-14 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-5 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-xl font-black text-[#050505]">NeedItz</span>
             <span className="text-xs font-bold text-[#9A9DA5] border border-[#D8D8D8] rounded-full px-2 py-0.5">Admin</span>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={fetchLeads} className="p-2 text-[#5E6168] hover:text-[#050505] transition-colors" aria-label="Refresh">
+            <button onClick={fetchLeads} className="p-2 text-[#5E6168] hover:text-[#050505] transition-colors" aria-label="Refresh leads">
               <RefreshCw size={16} />
             </button>
             <button onClick={handleLogout} className="flex items-center gap-1.5 text-sm font-semibold text-[#5E6168] hover:text-[#050505] transition-colors">
@@ -122,7 +128,7 @@ export function AdminDashboard() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-5 py-6 flex flex-col gap-5">
+      <div className="max-w-7xl mx-auto px-5 py-6 flex flex-col gap-5">
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
@@ -133,7 +139,7 @@ export function AdminDashboard() {
           ].map((s) => (
             <div key={s.label} className={`bg-white rounded-xl border px-4 py-3 ${s.highlight ? "border-[#FFC400]" : "border-[#D8D8D8]"}`}>
               <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5]">{s.label}</p>
-              <p className={`text-2xl font-black mt-0.5 ${s.highlight ? "text-[#050505]" : "text-[#050505]"}`}>{s.value}</p>
+              <p className="text-2xl font-black mt-0.5 text-[#050505]">{s.value}</p>
             </div>
           ))}
         </div>
@@ -174,6 +180,7 @@ export function AdminDashboard() {
                 }}
                 onPatch={(patch) => patchLead(lead.id, patch)}
                 onDelete={() => handleDelete(lead.id)}
+                onLeadUpdate={updateLeadInState}
               />
             ))}
           </div>
@@ -183,22 +190,31 @@ export function AdminDashboard() {
   );
 }
 
+// ─────────────────────────────────────────────────────────────────
+// LeadCard
+// ─────────────────────────────────────────────────────────────────
+
 interface LeadCardProps {
   lead: Lead;
   expanded: boolean;
   onToggle: () => void;
   onPatch: (patch: Partial<Lead>) => void;
   onDelete: () => void;
+  onLeadUpdate: (updated: Lead) => void;
 }
 
-function LeadCard({ lead, expanded, onToggle, onPatch, onDelete }: LeadCardProps) {
+function LeadCard({ lead, expanded, onToggle, onPatch, onDelete, onLeadUpdate }: LeadCardProps) {
   const [notes, setNotes] = useState(lead.internalNotes);
   const [savingNotes, setSavingNotes] = useState(false);
+
+  // Keep notes in sync if lead updates externally (e.g. AI report saves)
+  useEffect(() => {
+    setNotes(lead.internalNotes);
+  }, [lead.internalNotes]);
 
   async function saveNotes() {
     setSavingNotes(true);
     onPatch({ internalNotes: notes });
-    // Optimistically assume success; real update happens in parent
     await new Promise((r) => setTimeout(r, 300));
     setSavingNotes(false);
   }
@@ -207,7 +223,7 @@ function LeadCard({ lead, expanded, onToggle, onPatch, onDelete }: LeadCardProps
 
   return (
     <div className={`bg-white rounded-2xl border transition-all ${isNew ? "border-[#FFC400]" : "border-[#D8D8D8]"}`}>
-      {/* Row summary */}
+      {/* Collapsed summary row */}
       <div
         className="flex items-start gap-3 p-4 cursor-pointer select-none"
         onClick={onToggle}
@@ -224,6 +240,11 @@ function LeadCard({ lead, expanded, onToggle, onPatch, onDelete }: LeadCardProps
             <span className={`text-[10px] font-bold rounded-full px-2 py-0.5 ${STATUS_COLORS[lead.status]}`}>
               {STATUS_LABELS[lead.status]}
             </span>
+            {lead.aiReport && (
+              <span className="text-[10px] font-bold rounded-full px-2 py-0.5 bg-purple-100 text-purple-700">
+                AI Report
+              </span>
+            )}
             <span className="text-xs font-mono text-[#9A9DA5]">{lead.requestId}</span>
           </div>
           <p className="font-bold text-[#050505] text-sm leading-snug truncate">{lead.itemRequest}</p>
@@ -242,93 +263,107 @@ function LeadCard({ lead, expanded, onToggle, onPatch, onDelete }: LeadCardProps
         </div>
       </div>
 
-      {/* Expanded details */}
+      {/* Expanded: two-column layout on desktop */}
       {expanded && (
-        <div className="border-t border-[#D8D8D8] px-4 py-5 flex flex-col gap-5">
-          {/* Contact */}
-          <div className="grid grid-cols-2 gap-4">
-            <Detail label="Full Name" value={lead.fullName} />
-            {lead.companyName && <Detail label="Company" value={lead.companyName} />}
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-0.5">Email</p>
-              <a href={`mailto:${lead.email}`} className="text-sm text-[#050505] flex items-center gap-1 hover:text-[#FFC400] transition-colors">
-                <Mail size={12} className="shrink-0" />{lead.email}
-              </a>
+        <div className="border-t border-[#D8D8D8]">
+          <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-0 lg:gap-0">
+            {/* LEFT COLUMN: Lead details */}
+            <div className="px-4 py-5 flex flex-col gap-5 lg:border-r lg:border-[#D8D8D8]">
+              {/* Contact */}
+              <div className="grid grid-cols-2 gap-4">
+                <Detail label="Full Name" value={lead.fullName} />
+                {lead.companyName && <Detail label="Company" value={lead.companyName} />}
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-0.5">Email</p>
+                  <a href={`mailto:${lead.email}`} className="text-sm text-[#050505] flex items-center gap-1 hover:text-[#FFC400] transition-colors break-all">
+                    <Mail size={12} className="shrink-0" />{lead.email}
+                  </a>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-0.5">Phone</p>
+                  <a href={`tel:${lead.phone}`} className="text-sm text-[#050505] flex items-center gap-1 hover:text-[#FFC400] transition-colors">
+                    <Phone size={12} className="shrink-0" />{lead.phone}
+                  </a>
+                </div>
+              </div>
+
+              {/* Request */}
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-1">Request</p>
+                <p className="text-sm text-[#050505] leading-relaxed bg-[#F7F7F7] rounded-xl p-3">{lead.itemRequest}</p>
+              </div>
+
+              {/* Details grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <Detail label="Budget" value={lead.budget} />
+                <Detail label="Deadline" value={lead.deadlineIsFlexible ? "Flexible" : (lead.deadline ?? "—")} />
+                <Detail label="Delivery" value={lead.deliveryLocation} />
+              </div>
+
+              {lead.additionalDetails && (
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-1">Additional Details</p>
+                  <p className="text-sm text-[#5E6168] leading-relaxed">{lead.additionalDetails}</p>
+                </div>
+              )}
+
+              {/* Status */}
+              <div className="flex flex-wrap gap-3 items-end">
+                <div className="flex flex-col gap-1">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5]">Status</label>
+                  <select
+                    value={lead.status}
+                    onChange={(e) => onPatch({ status: e.target.value as LeadStatus })}
+                    className="border border-[#D8D8D8] rounded-lg px-3 py-2 text-sm text-[#050505] bg-white focus:outline-none focus:border-[#FFC400]"
+                  >
+                    {(Object.entries(STATUS_LABELS) as [LeadStatus, string][]).map(([v, l]) => (
+                      <option key={v} value={v}>{l}</option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={onDelete}
+                  className="flex items-center gap-1.5 text-sm font-semibold text-red-500 hover:text-red-700 transition-colors border border-red-200 rounded-lg px-3 py-2 hover:bg-red-50"
+                >
+                  <Trash2 size={14} />
+                  Delete Lead
+                </button>
+              </div>
+
+              {/* Internal notes */}
+              <div className="flex flex-col gap-2">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5]">Internal Notes</label>
+                <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  rows={3}
+                  placeholder="Add internal notes…"
+                  className="w-full border border-[#D8D8D8] rounded-xl px-3 py-2 text-sm text-[#050505] focus:border-[#FFC400] focus:outline-none resize-none"
+                />
+                <button
+                  onClick={saveNotes}
+                  disabled={savingNotes}
+                  className="self-start text-xs font-bold bg-[#050505] text-white px-4 py-2 rounded-lg hover:bg-[#1a1a1a] transition-colors disabled:opacity-50"
+                >
+                  {savingNotes ? "Saving…" : "Save Notes"}
+                </button>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-0.5">Phone</p>
-              <a href={`tel:${lead.phone}`} className="text-sm text-[#050505] flex items-center gap-1 hover:text-[#FFC400] transition-colors">
-                <Phone size={12} className="shrink-0" />{lead.phone}
-              </a>
+
+            {/* RIGHT COLUMN: AI Opportunity Report */}
+            <div className="px-4 py-5 bg-gray-50 lg:bg-white">
+              <AiReportCard lead={lead} onLeadUpdate={onLeadUpdate} />
             </div>
-          </div>
-
-          {/* Request */}
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-1">Request</p>
-            <p className="text-sm text-[#050505] leading-relaxed bg-[#F7F7F7] rounded-xl p-3">{lead.itemRequest}</p>
-          </div>
-
-          {/* Details grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <Detail label="Budget" value={lead.budget} />
-            <Detail label="Deadline" value={lead.deadlineIsFlexible ? "Flexible" : (lead.deadline ?? "—")} />
-            <Detail label="Delivery" value={lead.deliveryLocation} />
-          </div>
-
-          {lead.additionalDetails && (
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-1">Additional Details</p>
-              <p className="text-sm text-[#5E6168] leading-relaxed">{lead.additionalDetails}</p>
-            </div>
-          )}
-
-          {/* Status */}
-          <div className="flex flex-wrap gap-3 items-end">
-            <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5]">Status</label>
-              <select
-                value={lead.status}
-                onChange={(e) => onPatch({ status: e.target.value as LeadStatus })}
-                className="border border-[#D8D8D8] rounded-lg px-3 py-2 text-sm text-[#050505] bg-white focus:outline-none focus:border-[#FFC400]"
-              >
-                {(Object.entries(STATUS_LABELS) as [LeadStatus, string][]).map(([v, l]) => (
-                  <option key={v} value={v}>{l}</option>
-                ))}
-              </select>
-            </div>
-            <button
-              onClick={onDelete}
-              className="flex items-center gap-1.5 text-sm font-semibold text-red-500 hover:text-red-700 transition-colors border border-red-200 rounded-lg px-3 py-2 hover:bg-red-50"
-            >
-              <Trash2 size={14} />
-              Delete Lead
-            </button>
-          </div>
-
-          {/* Internal notes */}
-          <div className="flex flex-col gap-2">
-            <label className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5]">Internal Notes</label>
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows={3}
-              placeholder="Add internal notes…"
-              className="w-full border border-[#D8D8D8] rounded-xl px-3 py-2 text-sm text-[#050505] focus:border-[#FFC400] focus:outline-none resize-none"
-            />
-            <button
-              onClick={saveNotes}
-              disabled={savingNotes}
-              className="self-start text-xs font-bold bg-[#050505] text-white px-4 py-2 rounded-lg hover:bg-[#1a1a1a] transition-colors disabled:opacity-50"
-            >
-              {savingNotes ? "Saving…" : "Save Notes"}
-            </button>
           </div>
         </div>
       )}
     </div>
   );
 }
+
+// ─────────────────────────────────────────────────────────────────
+// Detail
+// ─────────────────────────────────────────────────────────────────
 
 function Detail({ label, value }: { label: string; value: string }) {
   return (
