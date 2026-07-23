@@ -210,7 +210,7 @@ export function Step1() {
       {/* Tagline image */}
       <div className="flex justify-center">
         <Image
-          src="https://gecvmizbryyiefclfnhs.supabase.co/storage/v1/object/public/STORAGE/images/Findit.png"
+          src="https://gecvmizbryyiefclfnhs.supabase.co/storage/v1/object/public/STORAGE/images/Find%20it.png"
           alt="We find it. You get it."
           width={220}
           height={110}
