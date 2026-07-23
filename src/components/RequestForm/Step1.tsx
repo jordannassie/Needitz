@@ -167,22 +167,25 @@ export function Step1() {
 
           <h1 className="text-[30px] sm:text-[38px] font-black text-[#050505] leading-tight">
             What are{" "}
-            <span className="relative inline-block pb-1">
+            <span className="relative inline-block">
               <span>you</span>
-              {/* Hand-drawn style yellow underline */}
+              {/* Clean yellow underline — straight line with rounded ends */}
               <svg
                 aria-hidden="true"
-                className="absolute left-0 w-full overflow-visible"
-                style={{ bottom: "-1px" }}
-                height="5"
-                viewBox="0 0 50 5"
+                className="absolute left-0 w-full overflow-visible pointer-events-none"
+                style={{ bottom: "-5px" }}
+                height="4"
+                viewBox="0 0 50 4"
                 preserveAspectRatio="none"
               >
-                <path
-                  d="M1 4 Q12.5 1.5 25 3.5 Q37.5 1 49 3.5"
+                <line
+                  className="you-underline-path"
+                  x1="1"
+                  y1="2"
+                  x2="49"
+                  y2="2"
                   stroke="#FFC400"
-                  strokeWidth="2.5"
-                  fill="none"
+                  strokeWidth="3"
                   strokeLinecap="round"
                 />
               </svg>
@@ -205,26 +208,28 @@ export function Step1() {
         <div className="flex items-center gap-1.5 mb-2" aria-hidden="true">
           <Lightbulb size={13} className="text-[#9A9DA5] flex-shrink-0" />
           <span className="text-xs text-[#9A9DA5]">Just type what you need</span>
-          {/* Curved arrow — hidden on very small screens */}
+          {/* Curved gray arrow pointing toward the textarea — hidden on narrowest screens */}
           <svg
-            className="ml-0.5 text-[#BBBFC7] flex-shrink-0 hidden xs:block"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
+            className="ml-1 flex-shrink-0 hidden min-[360px]:block"
+            width="50"
+            height="36"
+            viewBox="0 0 50 36"
             fill="none"
             aria-hidden="true"
           >
+            {/* Arc: starts top-left, curves right then down toward textarea */}
             <path
-              d="M3 4 C5 4 11 3.5 13 7.5 C14.5 11 13 14 11 15.5"
-              stroke="currentColor"
-              strokeWidth="1.4"
+              d="M 4 6 C 16 6 36 6 42 16 C 46 23 43 30 38 32"
+              stroke="#8B9099"
+              strokeWidth="1.6"
               strokeLinecap="round"
               fill="none"
             />
+            {/* Arrowhead */}
             <path
-              d="M9.5 14.5 L11 15.5 L12 13"
-              stroke="currentColor"
-              strokeWidth="1.4"
+              d="M 35 30 L 38 32 L 40 28"
+              stroke="#8B9099"
+              strokeWidth="1.6"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
