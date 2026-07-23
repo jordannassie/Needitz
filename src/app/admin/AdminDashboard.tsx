@@ -11,6 +11,7 @@ import {
   Mail,
   Phone,
   AlertCircle,
+  Download,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AiReportCard } from "./AiReportCard";
@@ -122,6 +123,15 @@ export function AdminDashboard() {
             <button onClick={fetchLeads} className="p-2 text-[#5E6168] hover:text-[#050505] transition-colors" aria-label="Refresh leads">
               <RefreshCw size={16} />
             </button>
+            <a
+              href="/api/admin/export"
+              download
+              className="flex items-center gap-1.5 text-sm font-semibold text-[#5E6168] hover:text-[#050505] transition-colors px-2 py-1"
+              aria-label="Download leads as CSV"
+            >
+              <Download size={15} />
+              <span className="hidden sm:inline">CSV</span>
+            </a>
             <button onClick={handleLogout} className="flex items-center gap-1.5 text-sm font-semibold text-[#5E6168] hover:text-[#050505] transition-colors">
               <LogOut size={15} /> Logout
             </button>
