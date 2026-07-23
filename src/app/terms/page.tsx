@@ -1,7 +1,7 @@
 import { Header } from "@/components/Header";
 
 export const metadata = {
-  title: "Terms of Service — Needitx",
+  title: "Terms of Service — Needitz",
 };
 
 export default function TermsPage() {
@@ -20,11 +20,11 @@ export default function TermsPage() {
           {[
             {
               title: "1. Acceptance of Terms",
-              body: "By submitting a request through Needitx, you agree to these Terms of Service. If you do not agree, do not use this service.",
+              body: "By submitting a request through Needitz, you agree to these Terms of Service. If you do not agree, do not use this service.",
             },
             {
               title: "2. No Guarantee of Service",
-              body: "Submitting a request does not guarantee that Needitx will source, supply, or deliver any item. Needitx may accept or decline any request at its sole discretion, for any reason, without obligation.",
+              body: "Submitting a request does not guarantee that Needitz will source, supply, or deliver any item. Needitz may accept or decline any request at its sole discretion, for any reason, without obligation.",
             },
             {
               title: "3. No Guarantee of Pricing or Availability",
@@ -32,7 +32,7 @@ export default function TermsPage() {
             },
             {
               title: "4. No Transaction Until Written Agreement",
-              body: "No binding transaction, purchase order, or service agreement exists between you and Needitx until a separate written agreement is executed by both parties. These terms and your request submission do not constitute a contract for goods or services.",
+              body: "No binding transaction, purchase order, or service agreement exists between you and Needitz until a separate written agreement is executed by both parties. These terms and your request submission do not constitute a contract for goods or services.",
             },
             {
               title: "5. Lawful Requests Only",
@@ -44,19 +44,19 @@ export default function TermsPage() {
             },
             {
               title: "7. Third-Party Suppliers",
-              body: "Needitx is not responsible for the acts or omissions of any third-party suppliers, manufacturers, or logistics providers unless and until Needitx has entered into a separate written agreement specifically accepting such responsibility.",
+              body: "Needitz is not responsible for the acts or omissions of any third-party suppliers, manufacturers, or logistics providers unless and until Needitz has entered into a separate written agreement specifically accepting such responsibility.",
             },
             {
               title: "8. Limitation of Liability",
-              body: "To the maximum extent permitted by law, Needitx shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use this service.",
+              body: "To the maximum extent permitted by law, Needitz shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use this service.",
             },
             {
               title: "9. Changes to Terms",
-              body: "Needitx reserves the right to update these Terms at any time. Continued use of the service after changes constitutes acceptance of the revised Terms.",
+              body: "Needitz reserves the right to update these Terms at any time. Continued use of the service after changes constitutes acceptance of the revised Terms.",
             },
             {
               title: "10. Governing Law",
-              body: "These Terms are governed by the laws of the jurisdiction in which Needitx operates, without regard to conflict of law principles.",
+              body: "These Terms are governed by the laws of the jurisdiction in which Needitz operates, without regard to conflict of law principles.",
             },
           ].map((section) => (
             <section key={section.title} className="mb-6">

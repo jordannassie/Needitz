@@ -453,7 +453,7 @@ function DraftMessage({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const emailHref = `mailto:${buyerEmail}?subject=${encodeURIComponent(`Re: Your Needitx Request`)}&body=${encodeURIComponent(text)}`;
+  const emailHref = `mailto:${buyerEmail}?subject=${encodeURIComponent(`Re: Your Needitz Request`)}&body=${encodeURIComponent(text)}`;
 
   return (
     <div>
@@ -685,7 +685,7 @@ function ReportView({
           )}
           <p><span className="font-semibold text-gray-700">Margin Assessment:</span> {report.budgetAnalysis.marginAssessment}</p>
           <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="font-semibold text-gray-700 mb-2">Needitx Revenue Scenarios (Preliminary)</p>
+            <p className="font-semibold text-gray-700 mb-2">Needitz Revenue Scenarios (Preliminary)</p>
             <div className="grid grid-cols-2 gap-x-4 gap-y-1">
               <span className="text-gray-600">2% fee:</span><span className="font-medium">{report.revenueScenarios.twoPercentFee}</span>
               <span className="text-gray-600">5% fee:</span><span className="font-medium">{report.revenueScenarios.fivePercentFee}</span>
@@ -713,7 +713,7 @@ function ReportView({
         {allSuppliers.length > 0 && (
           <>
             <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2 mb-3 leading-snug">
-              ⚠ Potential suppliers are research leads only. Needitx must independently verify the company, inventory, authority to sell, pricing, references, legal status, and payment terms.
+              ⚠ Potential suppliers are research leads only. Needitz must independently verify the company, inventory, authority to sell, pricing, references, legal status, and payment terms.
             </p>
             {allSuppliers.map((s, i) => <SupplierCard key={`${s.name}-${i}`} supplier={s} />)}
           </>

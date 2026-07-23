@@ -1,7 +1,7 @@
 import { Header } from "@/components/Header";
 
 export const metadata = {
-  title: "Privacy Policy — Needitx",
+  title: "Privacy Policy — Needitz",
 };
 
 export default function PrivacyPage() {

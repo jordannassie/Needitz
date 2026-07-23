@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
   const combinedText = `${data.item_request} ${data.additional_details ?? ""}`;
   if (isProhibitedRequest(combinedText)) {
     return NextResponse.json(
-      { success: false, error: "This request cannot be submitted through Needitx." },
+      { success: false, error: "This request cannot be submitted through Needitz." },
       { status: 422 }
     );
   }

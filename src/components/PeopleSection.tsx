@@ -57,7 +57,7 @@ const BENEFITS = [
 export function PeopleSection() {
   return (
     <section
-      aria-label="Who Needitx is built for"
+      aria-label="Who Needitz is built for"
       className="w-full border-t border-[#D8D8D8] bg-white"
     >
       <div className="max-w-2xl mx-auto px-5 py-10">
@@ -68,12 +68,12 @@ export function PeopleSection() {
               Built for people who need answers
             </h2>
             <p className="text-sm text-[#5E6168] leading-relaxed mb-6">
-              Needitx helps business owners, procurement teams, operators, and growing
+              Needitz helps business owners, procurement teams, operators, and growing
               companies simplify large, urgent, and hard-to-source purchase requests.
             </p>
 
             {/* Overlapping circular portraits */}
-            <div className="flex items-center mb-6" aria-label="Types of people Needitx serves">
+            <div className="flex items-center mb-6" aria-label="Types of people Needitz serves">
               <div className="flex -space-x-3">
                 {PEOPLE.map((p, i) => (
                   <div

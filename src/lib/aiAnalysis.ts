@@ -28,7 +28,7 @@ function getOpenAI(): OpenAI {
 // ─────────────────────────────────────────────────────────────────
 
 function buildSystemPrompt(): string {
-  return `You are a senior commercial sourcing analyst for Needitx, a B2B procurement facilitation service.
+  return `You are a senior commercial sourcing analyst for Needitz, a B2B procurement facilitation service.
 Your role is to evaluate incoming sourcing requests and produce structured opportunity reports for the admin team.
 
 STRICT RULES:
@@ -52,7 +52,7 @@ function buildUserPrompt(lead: Lead): string {
     ? lead.deadline
     : "Not specified";
 
-  return `Analyze this Needitx sourcing request and return a JSON opportunity report.
+  return `Analyze this Needitz sourcing request and return a JSON opportunity report.
 
 SUBMITTED REQUEST:
 - Item/Service: ${lead.itemRequest}
@@ -95,7 +95,7 @@ Return ONLY a JSON object matching this exact TypeScript type (no markdown, no p
     "estimatedMarketRange": "range or null",
     "budgetAssessment": "assessment text",
     "likelyAdditionalCosts": ["cost1", "cost2"],
-    "marginAssessment": "whether budget leaves room for Needitx fee",
+    "marginAssessment": "whether budget leaves room for Needitz fee",
     "assumptions": ["assumption1"]
   },
   "revenueScenarios": {
@@ -149,7 +149,7 @@ Return ONLY a JSON object matching this exact TypeScript type (no markdown, no p
       "supports": "What claim this supports"
     }
   ],
-  "draftFollowUpMessage": "Hi ${lead.fullName.split(" ")[0]}, thanks for submitting your Needitx request. [draft follow-up message based on missing info or next steps]"
+  "draftFollowUpMessage": "Hi ${lead.fullName.split(" ")[0]}, thanks for submitting your Needitz request. [draft follow-up message based on missing info or next steps]"
 }
 
 IMPORTANT:
@@ -279,7 +279,7 @@ function validateAndRepair(raw: unknown, lead: Lead): AiOpportunityReport {
     : "unknown";
 
   const firstName = lead.fullName.split(" ")[0] || lead.fullName;
-  const defaultDraft = `Hi ${firstName}, thank you for submitting your Needitx request. To determine whether we can help, we have a few follow-up questions. Please reply at your earliest convenience and we'll be in touch shortly.`;
+  const defaultDraft = `Hi ${firstName}, thank you for submitting your Needitz request. To determine whether we can help, we have a few follow-up questions. Please reply at your earliest convenience and we'll be in touch shortly.`;
 
   return {
     generatedAt: safeStr(r.generatedAt, new Date().toISOString()),
@@ -354,7 +354,7 @@ function extractJson(text: string): unknown {
 async function runResearch(lead: Lead): Promise<{ text: string; citations: string[] }> {
   const openai = getOpenAI();
 
-  const searchPrompt = `Research the following B2B sourcing request for Needitx. Find current market pricing, legitimate suppliers, manufacturers, distributors, and relevant industry information.
+  const searchPrompt = `Research the following B2B sourcing request for Needitz. Find current market pricing, legitimate suppliers, manufacturers, distributors, and relevant industry information.
 
 Request: ${lead.itemRequest}
 Budget: ${lead.budget}

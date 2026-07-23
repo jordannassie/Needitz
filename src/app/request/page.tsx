@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { RequestForm } from "@/components/RequestForm";
 
 export const metadata = {
-  title: "Submit a Request — Needitx",
+  title: "Submit a Request — Needitz",
 };
 
 export default function RequestPage() {

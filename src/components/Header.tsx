@@ -20,7 +20,7 @@ export function Header() {
     <>
       <header className="sticky top-0 z-40 bg-white border-b-0">
         <div className="mx-auto max-w-2xl px-5 flex items-center justify-between h-16 sm:h-[72px]">
-          <Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC400] rounded-sm" aria-label="Needitx home">
+          <Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC400] rounded-sm" aria-label="Needitz home">
             <Logo size="text-[26px] sm:text-[30px]" />
           </Link>
           <button

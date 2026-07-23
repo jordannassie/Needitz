@@ -44,7 +44,7 @@ export function PromoMediaSection() {
 
   return (
     <section
-      aria-label="Needitx promotional media"
+      aria-label="Needitz promotional media"
       className="w-full bg-white pt-10 pb-12 sm:pt-12 sm:pb-14 px-5 sm:px-6"
     >
       <div className="max-w-[1150px] mx-auto">
@@ -53,13 +53,13 @@ export function PromoMediaSection() {
           {/* ── Square ad image ──────────────────────────────── */}
           <Link
             href="/request"
-            aria-label="Submit a request — Needitx"
+            aria-label="Submit a request — Needitz"
             className="block rounded-[16px] overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC400] motion-safe:transition-opacity hover:opacity-96"
           >
             <div className="relative w-full aspect-square bg-[#F7F7F7] rounded-[16px] overflow-hidden">
               <Image
                 src={AD_URL}
-                alt="Needitx advertisement inviting users to submit large and hard-to-source purchase requests."
+                alt="Needitz advertisement inviting users to submit large and hard-to-source purchase requests."
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1150px) 50vw, 555px"
@@ -80,7 +80,7 @@ export function PromoMediaSection() {
               playsInline
               preload="metadata"
               className="w-full h-full object-contain"
-              aria-label="Needitx commercial — submit large and hard-to-source purchase requests"
+              aria-label="Needitz commercial — submit large and hard-to-source purchase requests"
             />
 
             {/* Sound toggle */}

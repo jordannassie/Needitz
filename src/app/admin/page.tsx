@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
 import { AdminDashboard } from "./AdminDashboard";
 
-export const metadata = { title: "Admin — Needitx" };
+export const metadata = { title: "Admin — Needitz" };
 
 export default async function AdminPage() {
   if (!(await isAdminAuthenticated())) {

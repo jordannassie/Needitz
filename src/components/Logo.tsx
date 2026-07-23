@@ -4,20 +4,20 @@ interface LogoProps {
 }
 
 /**
- * Needitx wordmark.
+ * Needitz wordmark.
  * "Need" is black (#050505).
- * "itx" is Needitx yellow (#FFC400).
- * Accessible label reads as one word: Needitx.
+ * "itz" is Needitz yellow (#FFC400).
+ * Accessible label reads as one word: Needitz.
  */
 export function Logo({ size = "text-xl" }: LogoProps) {
   return (
-    <span className="flex flex-col items-start gap-0" aria-label="Needitx">
+    <span className="flex flex-col items-start gap-0" aria-label="Needitz">
       <span
         className={`${size} font-black leading-none tracking-tight`}
         aria-hidden="true"
       >
         <span className="text-[#050505]">Need</span>
-        <span className="text-[#FFC400]">itx</span>
+        <span className="text-[#FFC400]">itz</span>
       </span>
       {/* Yellow underline — ~55% width scales proportionally with font size */}
       <span className="block h-[3px] w-[55%] bg-[#FFC400] rounded-full mt-[3px]" />

@@ -28,7 +28,7 @@ const DEFAULT_FORM_DATA: FormData = {
   additional_details: "",
 };
 
-const STORAGE_KEY = "needitx_form_draft";
+const STORAGE_KEY = "needitz_form_draft";
 
 interface FormContextValue {
   formData: FormData;

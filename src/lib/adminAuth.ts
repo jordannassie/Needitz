@@ -17,8 +17,8 @@ import { cookies } from "next/headers";
 const ADMIN_PIN = "1234";
 
 // Opaque session marker — never sent to the client; only validated server-side
-const SESSION_MARKER = "needitx_session_v1_authenticated";
-const COOKIE_NAME = "needitx_admin";
+const SESSION_MARKER = "needitz_session_v1_authenticated";
+const COOKIE_NAME = "needitz_admin";
 
 export function isPinValid(pin: string): boolean {
   return pin === ADMIN_PIN;
