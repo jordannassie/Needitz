@@ -1,4 +1,4 @@
-import type { RequestPriority } from "@/types/database";
+export type RequestPriority = "normal" | "high" | "urgent";
 
 export function assignPriority(budgetNumeric: number | null): RequestPriority {
   if (budgetNumeric === null) return "normal";

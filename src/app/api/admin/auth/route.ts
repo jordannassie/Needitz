@@ -1,22 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isPinValid, buildSessionCookieValue, COOKIE_NAME } from "@/lib/adminAuth";
 import { checkRateLimit } from "@/lib/rateLimit";
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  const rateCheck = checkRateLimit(`admin-auth:${ip}`, 5, 15 * 60 * 1000);
-  if (!rateCheck.allowed) {
-    return NextResponse.json({ error: "Too many attempts." }, { status: 429 });
+  const { allowed } = checkRateLimit(`admin-auth:${ip}`, 5, 15 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json({ error: "Too many attempts. Try again later." }, { status: 429 });
   }
 
-  const { password } = (await req.json()) as { password?: string };
-  const adminPassword = process.env.ADMIN_PASSWORD;
+  const { pin } = (await req.json()) as { pin?: string };
 
-  if (!adminPassword || !password || password !== adminPassword) {
-    return NextResponse.json({ error: "Invalid password." }, { status: 401 });
+  if (!pin || !isPinValid(pin)) {
+    return NextResponse.json({ error: "Incorrect PIN." }, { status: 401 });
   }
 
   const res = NextResponse.json({ success: true });
-  res.cookies.set("admin_session", Buffer.from(`${password}:${Date.now()}`).toString("base64"), {
+  res.cookies.set(COOKIE_NAME, buildSessionCookieValue(), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -28,6 +28,6 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE() {
   const res = NextResponse.json({ success: true });
-  res.cookies.delete("admin_session");
+  res.cookies.delete(COOKIE_NAME);
   return res;
 }

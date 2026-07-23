@@ -37,15 +37,7 @@ export function Step6() {
     setServerError("");
 
     try {
-      const utmParams = new URLSearchParams(window.location.search);
-      const payload = {
-        ...formData,
-        utm_source: utmParams.get("utm_source") ?? undefined,
-        utm_medium: utmParams.get("utm_medium") ?? undefined,
-        utm_campaign: utmParams.get("utm_campaign") ?? undefined,
-        source: "web",
-      };
-
+      const payload = { ...formData, source: "web" };
       const res = await fetch("/api/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,28 +46,25 @@ export function Step6() {
 
       const data = (await res.json()) as {
         success?: boolean;
-        requestNumber?: string;
-        preview?: boolean;
+        requestId?: string;
         error?: string;
       };
 
       if (!res.ok || !data.success) {
         trackEvent("request_submission_failed", { reason: data.error ?? "unknown" });
-        setServerError(data.error ?? "Something went wrong. Please try again.");
+        setServerError(
+          data.error ?? "We couldn't submit your request. Please try again."
+        );
         setSubmitting(false);
         return;
       }
 
-      trackEvent("request_submitted", { request_number: data.requestNumber });
+      trackEvent("request_submitted", { request_id: data.requestId });
       clearForm();
-      const successUrl = data.preview
-        ? `/request/success?id=${data.requestNumber}&preview=true`
-        : `/request/success?id=${data.requestNumber}`;
-      router.push(successUrl);
-    } catch (err) {
-      console.error(err);
+      router.push(`/request/success?id=${data.requestId}`);
+    } catch {
       trackEvent("request_submission_failed", { reason: "network_error" });
-      setServerError("A network error occurred. Please try again.");
+      setServerError("We couldn't submit your request. Please try again.");
       setSubmitting(false);
     }
   }
@@ -123,7 +112,8 @@ export function Step6() {
           error={errors.confirmed_legitimate}
           onChange={(v) => {
             updateFormData({ confirmed_legitimate: v });
-            if (errors.confirmed_legitimate) setErrors((e) => ({ ...e, confirmed_legitimate: "" }));
+            if (errors.confirmed_legitimate)
+              setErrors((e) => ({ ...e, confirmed_legitimate: "" }));
           }}
           label="I confirm this is a legitimate request and I am authorized to make this purchase."
         />
@@ -133,7 +123,8 @@ export function Step6() {
           error={errors.agreed_to_terms}
           onChange={(v) => {
             updateFormData({ agreed_to_terms: v });
-            if (errors.agreed_to_terms) setErrors((e) => ({ ...e, agreed_to_terms: "" }));
+            if (errors.agreed_to_terms)
+              setErrors((e) => ({ ...e, agreed_to_terms: "" }));
           }}
           label={
             <>
