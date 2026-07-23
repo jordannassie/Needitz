@@ -42,6 +42,60 @@ body {
   }
 }
 
+/* ── Textarea idle glow ──────────────────────────────────────────
+   Gentle animated invitation ring around the Step 1 textarea.
+   Uses box-shadow so there is zero layout shift.
+   Paused when the textarea is focused (focus state uses Tailwind).
+   Reduced-motion: static tint only, no animation.
+   ─────────────────────────────────────────────────────────────── */
+@keyframes textarea-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px rgba(255, 196, 0, 0.22),
+      0 0 8px rgba(255, 196, 0, 0.08);
+  }
+  40% {
+    box-shadow:
+      0 0 0 2px rgba(255, 176, 0, 0.38),
+      0 0 14px rgba(255, 138, 0, 0.14);
+  }
+  70% {
+    box-shadow:
+      0 0 0 2px rgba(255, 138, 0, 0.25),
+      0 0 10px rgba(255, 176, 0, 0.1);
+  }
+}
+
+.textarea-idle-glow {
+  animation: textarea-glow 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textarea-idle-glow {
+    animation: none;
+    box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.4);
+  }
+}
+
+/* Blinking text cursor in the typing overlay */
+@keyframes blink-cursor {
+  0%,
+  100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-cursor {
+  animation: blink-cursor 0.75s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-cursor {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 @layer components {
   .btn-primary {
     @apply w-full bg-[#050505] text-white font-bold text-base rounded-xl flex items-center justify-center gap-2 transition-all;
