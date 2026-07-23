@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   ArrowRight,
+  ArrowDownRight,
   ShieldCheck,
   Lock,
   Lightbulb,
@@ -165,7 +166,7 @@ export function Step1() {
             <Sparkle size={13} />
           </span>
 
-          <h1 className="text-[30px] sm:text-[38px] font-black text-[#050505] leading-tight">
+          <h1 className="text-[28px] sm:text-[38px] font-black text-[#050505] leading-tight sm:whitespace-nowrap">
             What are{" "}
             <span className="relative inline-block">
               <span>you</span>
@@ -208,32 +209,7 @@ export function Step1() {
         <div className="flex items-center gap-1.5 mb-2" aria-hidden="true">
           <Lightbulb size={13} className="text-[#9A9DA5] flex-shrink-0" />
           <span className="text-xs text-[#9A9DA5]">Just type what you need</span>
-          {/* Curved gray arrow pointing toward the textarea — hidden on narrowest screens */}
-          <svg
-            className="ml-1 flex-shrink-0 hidden min-[360px]:block"
-            width="50"
-            height="36"
-            viewBox="0 0 50 36"
-            fill="none"
-            aria-hidden="true"
-          >
-            {/* Arc: starts top-left, curves right then down toward textarea */}
-            <path
-              d="M 4 6 C 16 6 36 6 42 16 C 46 23 43 30 38 32"
-              stroke="#8B9099"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              fill="none"
-            />
-            {/* Arrowhead */}
-            <path
-              d="M 35 30 L 38 32 L 40 28"
-              stroke="#8B9099"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ArrowDownRight size={16} className="text-[#8B9099] flex-shrink-0" strokeWidth={1.75} />
         </div>
 
         <div className="relative">

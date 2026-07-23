@@ -24,7 +24,7 @@ function FormInner() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="w-full max-w-lg mx-auto px-5 py-8">
+    <div className="w-full max-w-2xl mx-auto px-5 py-8">
       <ProgressIndicator currentStep={currentStep} totalSteps={6} />
       <StepComponent />
     </div>

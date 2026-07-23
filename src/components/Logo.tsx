@@ -16,7 +16,7 @@ export function Logo({ size = "text-xl" }: LogoProps) {
         aria-hidden="true"
       >
         <span className="text-[#050505]">Need</span>
-        <span className="text-[#FFC400]">It</span>
+        <span className="text-[#FFC400]">it</span>
         <span className="text-[#050505]">z</span>
       </span>
       {/* Yellow underline — ~55% width scales proportionally with font size */}
