@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AiReportCard } from "./AiReportCard";
+import { Logo } from "@/components/Logo";
 
 const STATUS_LABELS: Record<LeadStatus, string> = {
   new: "New",
@@ -113,8 +114,8 @@ export function AdminDashboard() {
       {/* Header */}
       <header className="bg-white border-b border-[#D8D8D8] sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-5 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-black text-[#050505]">NeedItz</span>
+          <div className="flex items-center gap-3">
+            <Logo />
             <span className="text-xs font-bold text-[#9A9DA5] border border-[#D8D8D8] rounded-full px-2 py-0.5">Admin</span>
           </div>
           <div className="flex items-center gap-2">

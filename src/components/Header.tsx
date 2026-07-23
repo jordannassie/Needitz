@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { Logo } from "./Logo";
 
 const NAV_LINKS = [
   { href: "/request", label: "Submit a Request" },
@@ -19,9 +20,8 @@ export function Header() {
     <>
       <header className="sticky top-0 z-40 bg-white border-b-0">
         <div className="mx-auto max-w-2xl px-5 flex items-center justify-between h-14">
-          <Link href="/" className="flex flex-col gap-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC400] rounded-sm" aria-label="NeedItz home">
-            <span className="text-xl font-black text-[#050505] leading-none tracking-tight">NeedItz</span>
-            <span className="block h-[3px] w-10 bg-[#FFC400] rounded-full mt-[3px]" />
+          <Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC400] rounded-sm" aria-label="NeedItz home">
+            <Logo />
           </Link>
           <button
             onClick={() => setOpen(true)}
