@@ -1,8 +1,7 @@
 import { Header } from "@/components/Header";
 import { RequestForm } from "@/components/RequestForm";
 import { HomeContent } from "@/components/HomeContent";
-import { PromoImage } from "@/components/PromoImage";
-import { VideoSection } from "@/components/VideoSection";
+import { PromoMediaSection } from "@/components/PromoMediaSection";
 import { SiteFooter } from "@/components/SiteFooter";
 
 export default function Home() {
@@ -13,8 +12,7 @@ export default function Home() {
         <RequestForm />
       </main>
       <HomeContent />
-      <PromoImage />
-      <VideoSection />
+      <PromoMediaSection />
       <SiteFooter />
     </>
   );
