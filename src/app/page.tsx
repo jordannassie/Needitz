@@ -1,5 +1,7 @@
 import { Header } from "@/components/Header";
 import { RequestForm } from "@/components/RequestForm";
+import { HomeContent } from "@/components/HomeContent";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export default function Home() {
   return (
@@ -8,6 +10,8 @@ export default function Home() {
       <main id="main-content">
         <RequestForm />
       </main>
+      <HomeContent />
+      <SiteFooter />
     </>
   );
 }
