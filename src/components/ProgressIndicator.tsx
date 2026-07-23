@@ -27,7 +27,7 @@ export function ProgressIndicator({ currentStep, totalSteps }: ProgressIndicator
           <div key={step} className="flex items-center">
             <div className="flex flex-col items-center gap-1">
               {/* Circle wrapper — relative so the pulse ring can be absolutely placed */}
-              <div className="relative flex items-center justify-center w-7 h-7">
+              <div className="relative flex items-center justify-center w-[34px] h-[34px]">
                 {/* Pulsing ring — only on the active step */}
                 {isCurrent && (
                   <span
@@ -38,7 +38,7 @@ export function ProgressIndicator({ currentStep, totalSteps }: ProgressIndicator
 
                 {/* Inner circle */}
                 <div
-                  className={`relative z-10 flex items-center justify-center rounded-full transition-all w-7 h-7 ${
+                  className={`relative z-10 flex items-center justify-center rounded-full transition-all w-[34px] h-[34px] ${
                     isCurrent
                       ? "bg-[#FFC400] text-[#050505]"
                       : isCompleted
@@ -48,9 +48,9 @@ export function ProgressIndicator({ currentStep, totalSteps }: ProgressIndicator
                   aria-hidden="true"
                 >
                   {isCompleted ? (
-                    <Check size={13} strokeWidth={3} />
+                    <Check size={15} strokeWidth={3} />
                   ) : (
-                    <span className="text-[11px] font-bold">{step}</span>
+                    <span className="text-[12px] font-bold">{step}</span>
                   )}
                 </div>
               </div>
