@@ -13,8 +13,6 @@ export interface FormData {
   phone: string;
   company_name: string;
   additional_details: string;
-  confirmed_legitimate: boolean;
-  agreed_to_terms: boolean;
 }
 
 const DEFAULT_FORM_DATA: FormData = {
@@ -28,8 +26,6 @@ const DEFAULT_FORM_DATA: FormData = {
   phone: "",
   company_name: "",
   additional_details: "",
-  confirmed_legitimate: false,
-  agreed_to_terms: false,
 };
 
 const STORAGE_KEY = "needitz_form_draft";

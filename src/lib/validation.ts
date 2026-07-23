@@ -43,8 +43,6 @@ export const step5Schema = z.object({
 
 export const step6Schema = z.object({
   additional_details: z.string().max(300, "Must be 300 characters or fewer.").optional(),
-  confirmed_legitimate: z.literal(true, "You must confirm this is a legitimate request."),
-  agreed_to_terms: z.literal(true, "You must agree to the Terms and Privacy Policy."),
 });
 
 export const fullRequestSchema = step1Schema

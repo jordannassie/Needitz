@@ -72,22 +72,13 @@ describe("step5Schema", () => {
 });
 
 describe("step6Schema", () => {
-  it("accepts valid submission with both checkboxes", () => {
-    expect(step6Schema.safeParse({
-      confirmed_legitimate: true,
-      agreed_to_terms: true,
-    }).success).toBe(true);
+  it("accepts empty additional details", () => {
+    expect(step6Schema.safeParse({}).success).toBe(true);
   });
-  it("rejects unchecked legitimate", () => {
-    expect(step6Schema.safeParse({
-      confirmed_legitimate: false,
-      agreed_to_terms: true,
-    }).success).toBe(false);
+  it("accepts valid additional details", () => {
+    expect(step6Schema.safeParse({ additional_details: "Stainless steel preferred." }).success).toBe(true);
   });
-  it("rejects unchecked terms", () => {
-    expect(step6Schema.safeParse({
-      confirmed_legitimate: true,
-      agreed_to_terms: false,
-    }).success).toBe(false);
+  it("rejects additional details over 300 chars", () => {
+    expect(step6Schema.safeParse({ additional_details: "x".repeat(301) }).success).toBe(false);
   });
 });

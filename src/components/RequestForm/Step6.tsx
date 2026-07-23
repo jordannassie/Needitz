@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useFormContext } from "./FormContext";
 import { step6Schema } from "@/lib/validation";
 import { trackEvent } from "@/components/Analytics";
@@ -9,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 export function Step6() {
   const { formData, updateFormData, setStep, clearForm } = useFormContext();
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState("");
   const router = useRouter();
@@ -20,19 +21,12 @@ export function Step6() {
   async function handleSubmit() {
     const result = step6Schema.safeParse({
       additional_details: formData.additional_details || undefined,
-      confirmed_legitimate: formData.confirmed_legitimate,
-      agreed_to_terms: formData.agreed_to_terms,
     });
     if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      for (const err of result.error.issues) {
-        const field = err.path[0] as string;
-        if (!fieldErrors[field]) fieldErrors[field] = err.message;
-      }
-      setErrors(fieldErrors);
+      setError(result.error.issues[0]?.message ?? "Validation failed.");
       return;
     }
-    setErrors({});
+    setError("");
     setSubmitting(true);
     setServerError("");
 
@@ -91,55 +85,27 @@ export function Step6() {
             onChange={(e) => {
               if (e.target.value.length <= MAX) {
                 updateFormData({ additional_details: e.target.value });
+                if (error) setError("");
               }
             }}
             placeholder="Any specific brands, models, quantities, specifications, delivery requirements, or other details we should know?"
             rows={5}
             maxLength={MAX}
-            className="w-full border border-[#D8D8D8] rounded-xl bg-white text-[#050505] text-base px-4 py-3 resize-none transition-all focus:border-[#FFC400] focus:outline-none"
+            aria-describedby={error ? "details-error" : undefined}
+            aria-invalid={!!error}
+            className={`w-full border rounded-xl bg-white text-[#050505] text-base px-4 py-3 resize-none transition-all focus:border-[#FFC400] focus:outline-none ${
+              error ? "border-red-400" : "border-[#D8D8D8]"
+            }`}
           />
           <span className="absolute bottom-3 right-4 text-xs text-[#9A9DA5]">
             {count}/{MAX}
           </span>
         </div>
-      </div>
-
-      {/* Checkboxes */}
-      <div className="flex flex-col gap-3">
-        <Checkbox
-          id="confirmed_legitimate"
-          checked={formData.confirmed_legitimate}
-          error={errors.confirmed_legitimate}
-          onChange={(v) => {
-            updateFormData({ confirmed_legitimate: v });
-            if (errors.confirmed_legitimate)
-              setErrors((e) => ({ ...e, confirmed_legitimate: "" }));
-          }}
-          label="I confirm this is a legitimate request and I am authorized to make this purchase."
-        />
-        <Checkbox
-          id="agreed_to_terms"
-          checked={formData.agreed_to_terms}
-          error={errors.agreed_to_terms}
-          onChange={(v) => {
-            updateFormData({ agreed_to_terms: v });
-            if (errors.agreed_to_terms)
-              setErrors((e) => ({ ...e, agreed_to_terms: "" }));
-          }}
-          label={
-            <>
-              I agree to the{" "}
-              <a href="/terms" target="_blank" className="underline hover:text-[#050505]">
-                Terms
-              </a>{" "}
-              and{" "}
-              <a href="/privacy" target="_blank" className="underline hover:text-[#050505]">
-                Privacy Policy
-              </a>
-              .
-            </>
-          }
-        />
+        {error && (
+          <p id="details-error" role="alert" className="text-sm text-red-500">
+            {error}
+          </p>
+        )}
       </div>
 
       {serverError && (
@@ -165,6 +131,20 @@ export function Step6() {
             "Submit Request"
           )}
         </button>
+
+        <p className="text-center text-xs text-[#9A9DA5] leading-relaxed px-2">
+          By submitting, you confirm this is a legitimate request, that you are authorized to
+          make this purchase, and that you agree to the{" "}
+          <Link href="/terms" className="underline hover:text-[#5E6168] transition-colors">
+            Terms
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="underline hover:text-[#5E6168] transition-colors">
+            Privacy Policy
+          </Link>
+          .
+        </p>
+
         <button
           type="button"
           onClick={() => setStep(5)}
@@ -175,47 +155,6 @@ export function Step6() {
           Back
         </button>
       </div>
-    </div>
-  );
-}
-
-interface CheckboxProps {
-  id: string;
-  checked: boolean;
-  error?: string;
-  onChange: (v: boolean) => void;
-  label: React.ReactNode;
-}
-
-function Checkbox({ id, checked, error, onChange, label }: CheckboxProps) {
-  return (
-    <div className="flex flex-col gap-1">
-      <label htmlFor={id} className="flex items-start gap-3 cursor-pointer">
-        <div className="relative mt-0.5 shrink-0">
-          <input
-            id={id}
-            type="checkbox"
-            checked={checked}
-            onChange={(e) => onChange(e.target.checked)}
-            aria-invalid={!!error}
-            aria-describedby={error ? `${id}-error` : undefined}
-            className="sr-only peer"
-          />
-          <div className="w-5 h-5 border-2 border-[#D8D8D8] rounded peer-checked:bg-[#FFC400] peer-checked:border-[#FFC400] transition-all flex items-center justify-center">
-            {checked && (
-              <svg className="w-3 h-3 text-[#050505]" viewBox="0 0 12 12" fill="none">
-                <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
-          </div>
-        </div>
-        <span className="text-sm text-[#5E6168] leading-relaxed">{label}</span>
-      </label>
-      {error && (
-        <p id={`${id}-error`} role="alert" className="text-sm text-red-500 ml-8">
-          {error}
-        </p>
-      )}
     </div>
   );
 }
