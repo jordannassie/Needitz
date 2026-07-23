@@ -1,4 +1,5 @@
 import { Clock, ShieldCheck, UserCheck, CheckCircle2 } from "lucide-react";
+import { PeopleSection } from "./PeopleSection";
 
 // ─── Credibility items ────────────────────────────────────────────
 const CREDIBILITY = [
@@ -28,8 +29,8 @@ const CREDIBILITY = [
 const EXAMPLES = [
   { item: "500 hotel beds", category: "Hospitality", budget: "$250,000+" },
   { item: "25 commercial refrigerators", category: "Commercial Equipment", budget: "$75,000+" },
-  { item: "2,000 school desks", category: "Education", budget: "$300,000+" },
-  { item: "60-foot inflatable rubber duck", category: "Events", budget: "$250,000+" },
+  { item: "50 construction vehicles", category: "Heavy Equipment", budget: "$2,000,000+" },
+  { item: "100,000 custom product boxes", category: "Manufacturing & Packaging", budget: "$150,000+" },
 ];
 
 export function HomeContent() {
@@ -98,7 +99,8 @@ export function HomeContent() {
           </p>
           <h2 className="text-base font-black text-[#050505]">Example requests</h2>
           <p className="text-sm text-[#5E6168] mt-1 leading-relaxed">
-            NeedItz is built for large purchases, urgent orders, unusual products, and items that are difficult to source.
+            NeedItz is built for large purchases, bulk orders, business equipment, and
+            hard-to-source products.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-3">
@@ -119,6 +121,9 @@ export function HomeContent() {
           These are illustrative examples only and do not represent completed transactions.
         </p>
       </section>
+
+      {/* ── People section ─────────────────────────────────────── */}
+      <PeopleSection />
     </div>
   );
 }
