@@ -3,7 +3,7 @@ import { ClipboardList, Search, Handshake, CheckCircle } from "lucide-react";
 import { Header } from "@/components/Header";
 
 export const metadata = {
-  title: "How It Works — NeedItz",
+  title: "How It Works — Needitx",
 };
 
 const STEPS = [
@@ -44,11 +44,11 @@ export default function HowItWorksPage() {
               How It Works
             </h1>
             <p className="text-[#5E6168] text-base leading-relaxed">
-              NeedItz is a simple, request-based sourcing service. Here's what happens after you submit.
+              Needitx is a simple, request-based sourcing service. Here's what happens after you submit.
             </p>
           </div>
 
-          <ol className="flex flex-col gap-6" aria-label="How NeedItz works">
+          <ol className="flex flex-col gap-6" aria-label="How Needitx works">
             {STEPS.map((step, idx) => {
               const Icon = step.icon;
               return (

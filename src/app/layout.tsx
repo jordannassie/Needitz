@@ -3,21 +3,21 @@ import "./globals.css";
 import { Analytics } from "@/components/Analytics";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://needitz.com"),
-  title: "NeedItz — Tell Us What You Need",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://needitx.com"),
+  title: "Needitx — Tell Us What You Need",
   description:
-    "Submit what you need, your budget, deadline, and location. NeedItz will review your request and contact you if we can help.",
+    "Submit what you need, your budget, deadline, and location. Needitx will review your request and contact you if we can help.",
   openGraph: {
-    title: "NeedItz — Tell Us What You Need",
+    title: "Needitx — Tell Us What You Need",
     description:
-      "Submit what you need, your budget, deadline, and location. NeedItz will review your request and contact you if we can help.",
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://needitz.com",
-    siteName: "NeedItz",
+      "Submit what you need, your budget, deadline, and location. Needitx will review your request and contact you if we can help.",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://needitx.com",
+    siteName: "Needitx",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NeedItz — Tell Us What You Need",
+    title: "Needitx — Tell Us What You Need",
     description: "Submit what you need, your budget, deadline, and location.",
   },
 };

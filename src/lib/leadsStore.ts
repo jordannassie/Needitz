@@ -14,7 +14,7 @@ import type { Lead, LeadStatus } from "@/types/lead";
 import type { AiOpportunityReport, AiSupplier, ResearchChecklistItem } from "@/types/aiReport";
 import { defaultLeadExtensions } from "@/types/lead";
 
-const STORE_NAME = "needitz-leads";
+const STORE_NAME = "needitx-leads";
 
 function store() {
   return getStore(STORE_NAME);

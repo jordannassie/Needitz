@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
   }
 
   const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-  const filename = `needitz-leads-${today}.csv`;
+  const filename = `needitx-leads-${today}.csv`;
 
   const rows: string[] = [csvRow(HEADERS)];
 

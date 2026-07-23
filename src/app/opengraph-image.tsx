@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "NeedItz — Tell Us What You Need";
+export const alt = "Needitx — Tell Us What You Need";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -24,7 +24,7 @@ export default function OgImage() {
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <span style={{ fontSize: "88px", fontWeight: 900, color: "#050505", letterSpacing: "-3px" }}>
-              NeedItz
+              Needitx
             </span>
             <div style={{ width: "80px", height: "6px", backgroundColor: "#FFC400", borderRadius: "3px", marginTop: "4px" }} />
           </div>

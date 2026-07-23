@@ -30,7 +30,7 @@ export function HomeContent() {
     <div className="w-full">
       {/* ── Credibility ────────────────────────────────────────── */}
       <section
-        aria-label="Why NeedItz"
+        aria-label="Why Needitx"
         className="w-full max-w-lg mx-auto px-5 pt-8 pb-2"
       >
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

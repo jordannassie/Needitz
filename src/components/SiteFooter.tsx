@@ -66,16 +66,16 @@ export function SiteFooter() {
               href="https://www.facebook.com/profile.php?id=61592072114259"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="NeedItz on Facebook"
+              aria-label="Needitx on Facebook"
               className="text-[#5E6168] hover:text-[#FFC400] transition-colors"
             >
               <FacebookIcon size={20} />
             </a>
             <a
-              href="https://www.instagram.com/needitzcom"
+              href="https://www.instagram.com/needitxcom"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="NeedItz on Instagram"
+              aria-label="Needitx on Instagram"
               className="text-[#5E6168] hover:text-[#FFC400] transition-colors"
             >
               <InstagramIcon size={20} />
@@ -122,7 +122,7 @@ export function SiteFooter() {
       <div className="border-t border-[#D8D8D8]">
         <div className="max-w-4xl mx-auto px-5 py-4">
           <p className="text-xs text-[#9A9DA5] text-center sm:text-left">
-            © {year} NeedItz. All rights reserved.
+            © {year} Needitx. All rights reserved.
           </p>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { Mail } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Contact — NeedItz",
+  title: "Contact — Needitx",
 };
 
 export default function ContactPage() {
@@ -25,10 +25,10 @@ export default function ContactPage() {
               <div>
                 <p className="text-sm font-bold text-[#050505]">Email us</p>
                 <a
-                  href="mailto:hello@needitz.com"
+                  href="mailto:hello@needitx.com"
                   className="text-sm text-[#5E6168] hover:text-[#FFC400] transition-colors"
                 >
-                  hello@needitz.com
+                  hello@needitx.com
                 </a>
               </div>
             </div>

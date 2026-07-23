@@ -247,11 +247,11 @@ export function Step1() {
               .join(" ")}
           />
 
-          {/* Typing overlay */}
+          {/* Typing overlay — z-10 ensures it paints above the textarea's stacking context */}
           {showOverlay && (
             <div
               aria-hidden="true"
-              className="absolute inset-0 px-4 py-3 text-base text-[#9A9DA5] italic pointer-events-none select-none rounded-2xl overflow-hidden leading-relaxed"
+              className="absolute inset-0 z-10 px-4 py-3 text-base text-[#9A9DA5] italic pointer-events-none select-none rounded-2xl overflow-hidden leading-relaxed"
             >
               <span>{displayText}</span>
               <span className="typing-cursor inline-block w-[1.5px] h-[1.1em] bg-[#FFC400] align-[-2px] ml-[1px]" />

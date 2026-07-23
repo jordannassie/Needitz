@@ -3,7 +3,7 @@ import { CheckIcon } from "lucide-react";
 import { Header } from "@/components/Header";
 
 export const metadata = {
-  title: "Request Received — NeedItz",
+  title: "Request Received — Needitx",
 };
 
 interface Props {
