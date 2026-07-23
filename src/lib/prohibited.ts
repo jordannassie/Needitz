@@ -1,0 +1,37 @@
+const PROHIBITED_PATTERNS = [
+  /\bfirearm(s)?\b/i,
+  /\bgun(s)?\b/i,
+  /\bpistol(s)?\b/i,
+  /\brifle(s)?\b/i,
+  /\bshotgun(s)?\b/i,
+  /\bammunition\b/i,
+  /\bammo\b/i,
+  /\bbullets?\b/i,
+  /\bexplosive(s)?\b/i,
+  /\bbomb(s)?\b/i,
+  /\bgrenade(s)?\b/i,
+  /\bC4\b/i,
+  /\bdrug(s)?\b/i,
+  /\bnarcotics?\b/i,
+  /\bcocaine\b/i,
+  /\bheroin\b/i,
+  /\bfentanyl\b/i,
+  /\bmeth(amphetamine)?\b/i,
+  /\bcounterfeit\b/i,
+  /\bfake (currency|money|id|passport)\b/i,
+  /\bstolen\b/i,
+  /\bhuman trafficking\b/i,
+  /\bsex trafficking\b/i,
+  /\blaundering\b/i,
+  /\bsanctioned goods?\b/i,
+  /\billegal surveillance\b/i,
+  /\bspyware\b/i,
+  /\bchild\b.*\bexploit/i,
+  /\bweapon(s)? of mass\b/i,
+  /\bbiological weapon/i,
+  /\bchemical weapon/i,
+];
+
+export function isProhibitedRequest(text: string): boolean {
+  return PROHIBITED_PATTERNS.some((pattern) => pattern.test(text));
+}

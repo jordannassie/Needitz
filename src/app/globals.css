@@ -4,18 +4,70 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #050505;
+  --yellow: #FFC400;
+  --gray-text: #5E6168;
+  --placeholder: #9A9DA5;
+  --border: #D8D8D8;
+  --soft-bg: #F7F7F7;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid #FFC400;
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply w-full bg-[#050505] text-white font-bold text-base rounded-xl flex items-center justify-center gap-2 transition-all;
+    height: 56px;
+  }
+  .btn-primary:hover {
+    @apply bg-[#1a1a1a];
+  }
+  .btn-primary:active {
+    @apply bg-[#333];
+  }
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .input-field {
+    @apply w-full border border-[#D8D8D8] rounded-xl bg-white text-[#050505] text-base px-4 transition-all;
+    height: 52px;
+  }
+  .input-field::placeholder {
+    color: #9A9DA5;
+  }
+  .input-field:focus {
+    @apply border-[#FFC400] outline-none ring-0;
+  }
+  .input-field.error {
+    @apply border-red-400;
+  }
 }

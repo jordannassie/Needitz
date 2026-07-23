@@ -1,7 +1,11 @@
 import { Header } from "@/components/Header";
 import { RequestForm } from "@/components/RequestForm";
 
-export default function Home() {
+export const metadata = {
+  title: "Submit a Request — NeedItz",
+};
+
+export default function RequestPage() {
   return (
     <>
       <Header />
