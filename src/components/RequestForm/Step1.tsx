@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { useFormContext } from "./FormContext";
 import { step1Schema } from "@/lib/validation";
@@ -204,6 +205,18 @@ export function Step1() {
           <strong className="text-[#050505]">Free to submit.</strong> We'll review your
           request and contact you if we can help.
         </p>
+      </div>
+
+      {/* Tagline image */}
+      <div className="flex justify-center">
+        <Image
+          src="https://gecvmizbryyiefclfnhs.supabase.co/storage/v1/object/public/STORAGE/images/Findit.png"
+          alt="We find it. You get it."
+          width={220}
+          height={110}
+          className="h-auto w-[180px] sm:w-[220px]"
+          priority={false}
+        />
       </div>
     </div>
   );
