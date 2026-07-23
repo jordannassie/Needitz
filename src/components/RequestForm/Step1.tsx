@@ -199,10 +199,12 @@ export function Step1() {
         <p className="text-center text-sm text-[#9A9DA5]">It only takes a few seconds.</p>
       </div>
 
-      <div className="flex items-start gap-2 bg-[#F7F7F7] rounded-xl px-4 py-3 mt-2">
-        <ShieldCheck size={16} className="text-[#9A9DA5] mt-0.5 shrink-0" aria-hidden="true" />
+      <div className="flex items-start gap-2.5 bg-[#F7F7F7] rounded-xl px-4 py-3 mt-2">
+        <span className="flex-shrink-0 mt-0.5 w-6 h-6 flex items-center justify-center rounded-md bg-[#DCFCE7]">
+          <ShieldCheck size={14} className="text-[#16A34A]" aria-hidden="true" />
+        </span>
         <p className="text-sm text-[#5E6168] leading-relaxed">
-          <strong className="text-[#050505]">Free to submit.</strong> We'll review your
+          <strong className="text-[#16A34A]">Free to submit.</strong> We'll review your
           request and contact you if we can help.
         </p>
       </div>
