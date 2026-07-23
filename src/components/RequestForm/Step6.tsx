@@ -52,7 +52,12 @@ export function Step6() {
         body: JSON.stringify(payload),
       });
 
-      const data = (await res.json()) as { success?: boolean; requestNumber?: string; error?: string };
+      const data = (await res.json()) as {
+        success?: boolean;
+        requestNumber?: string;
+        preview?: boolean;
+        error?: string;
+      };
 
       if (!res.ok || !data.success) {
         trackEvent("request_submission_failed", { reason: data.error ?? "unknown" });
@@ -63,7 +68,10 @@ export function Step6() {
 
       trackEvent("request_submitted", { request_number: data.requestNumber });
       clearForm();
-      router.push(`/request/success?id=${data.requestNumber}`);
+      const successUrl = data.preview
+        ? `/request/success?id=${data.requestNumber}&preview=true`
+        : `/request/success?id=${data.requestNumber}`;
+      router.push(successUrl);
     } catch (err) {
       console.error(err);
       trackEvent("request_submission_failed", { reason: "network_error" });

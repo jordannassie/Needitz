@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, FlaskConical } from "lucide-react";
 import { Header } from "@/components/Header";
 
 export const metadata = {
@@ -7,16 +7,20 @@ export const metadata = {
 };
 
 interface Props {
-  searchParams: Promise<{ id?: string }>;
+  searchParams: Promise<{ id?: string; preview?: string }>;
 }
 
 export default async function SuccessPage({ searchParams }: Props) {
-  const { id } = await searchParams;
+  const { id, preview } = await searchParams;
+  const isPreview = preview === "true";
 
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-[calc(100vh-60px)] flex items-start justify-center px-5 py-12">
+      <main
+        id="main-content"
+        className="min-h-[calc(100vh-60px)] flex items-start justify-center px-5 py-12"
+      >
         <div className="w-full max-w-lg flex flex-col items-center text-center gap-6">
           {/* Yellow checkmark circle */}
           <div
@@ -31,7 +35,9 @@ export default async function SuccessPage({ searchParams }: Props) {
               Request received!
             </h1>
             <p className="text-[#5E6168] text-base leading-relaxed max-w-sm mx-auto">
-              Thanks! We're reviewing your request and will contact you if we believe we can help.
+              {isPreview
+                ? "Your request flow is complete."
+                : "Thanks! We're reviewing your request and will contact you if we believe we can help."}
             </p>
           </div>
 
@@ -43,8 +49,33 @@ export default async function SuccessPage({ searchParams }: Props) {
               </p>
               <p className="text-2xl font-black text-[#050505] tracking-tight">{id}</p>
               <p className="text-sm text-[#5E6168] mt-2">
-                We've sent a confirmation email with the details.
+                {isPreview
+                  ? "This is a preview ID — no data has been saved."
+                  : "We've sent a confirmation email with the details."}
               </p>
+            </div>
+          )}
+
+          {/* ─── PREVIEW NOTICE ──────────────────────────────────────────────────
+              This block is shown only when the site is running without a database.
+              TO REMOVE: connect Supabase, Resend, and environment variables.
+              The ?preview=true param is set by the API when no DB is configured.
+          ──────────────────────────────────────────────────────────────────── */}
+          {isPreview && (
+            <div className="w-full flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-4 text-left">
+              <FlaskConical
+                size={18}
+                className="text-amber-500 shrink-0 mt-0.5"
+                aria-hidden="true"
+              />
+              <div>
+                <p className="text-sm font-bold text-amber-800 mb-0.5">
+                  Preview mode
+                </p>
+                <p className="text-sm text-amber-700 leading-relaxed">
+                  NeedItz is currently in preview mode, so this request has not been saved or emailed.
+                </p>
+              </div>
             </div>
           )}
 
