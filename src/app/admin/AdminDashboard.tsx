@@ -318,6 +318,36 @@ function LeadCard({ lead, expanded, onToggle, onPatch, onDelete, onLeadUpdate }:
                 </div>
               )}
 
+              {/* Reference Links */}
+              {lead.referenceLinks && lead.referenceLinks.length > 0 && (
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#9A9DA5] mb-2">
+                    Reference Links
+                  </p>
+                  <ul className="flex flex-col gap-1.5">
+                    {lead.referenceLinks.map((url, idx) => {
+                      let domain = url;
+                      try { domain = new URL(url).hostname.replace(/^www\./, ""); } catch {}
+                      return (
+                        <li key={idx} className="flex items-center gap-2">
+                          <span className="text-xs text-[#5E6168] truncate max-w-[200px]" title={url}>
+                            {domain}
+                          </span>
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-semibold text-[#FFC400] hover:underline flex-shrink-0"
+                          >
+                            Open ↗
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+
               {/* Status */}
               <div className="flex flex-wrap gap-3 items-end">
                 <div className="flex flex-col gap-1">

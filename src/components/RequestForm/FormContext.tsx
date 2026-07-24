@@ -13,6 +13,8 @@ export interface FormData {
   phone: string;
   company_name: string;
   additional_details: string;
+  /** Raw multiline string from the reference links textarea */
+  reference_links_raw: string;
 }
 
 const DEFAULT_FORM_DATA: FormData = {
@@ -26,6 +28,7 @@ const DEFAULT_FORM_DATA: FormData = {
   phone: "",
   company_name: "",
   additional_details: "",
+  reference_links_raw: "",
 };
 
 const STORAGE_KEY = "needitz_form_draft";

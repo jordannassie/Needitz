@@ -20,9 +20,9 @@ import { trackEvent } from "@/components/Analytics";
 // ─── Typing examples ─────────────────────────────────────────────
 const EXAMPLES = [
   "I need 25 commercial refrigerators delivered to Dallas within 30 days.",
-  "I need 500 hotel beds for a property opening next month.",
+  "I need 500 hotel beds similar to these:\nhttps://example.com/hotel-bed",
   "I need 50 construction vehicles delivered to Texas.",
-  "I need 100,000 custom product boxes by September.",
+  "I need 100,000 custom product boxes like this design:\nhttps://example.com/reference",
 ];
 const TYPE_MS = 48;
 const DELETE_MS = 28;
@@ -195,7 +195,8 @@ export function Step1() {
           </h1>
         </div>
         <p className="text-[#5E6168] text-base sm:text-[17px] leading-relaxed">
-          Tell us exactly what you need and we'll review whether we can help source it.
+          Tell us exactly what you need. You can also paste product links or image URLs to
+          help us understand your request.
         </p>
       </div>
 
@@ -208,7 +209,7 @@ export function Step1() {
         {/* Helper row */}
         <div className="flex items-center gap-1.5 mb-2" aria-hidden="true">
           <Lightbulb size={13} className="text-[#9A9DA5] flex-shrink-0" />
-          <span className="text-xs text-[#9A9DA5]">Just type what you need</span>
+          <span className="text-xs text-[#9A9DA5]">Describe what you need or paste a link</span>
           <ArrowDownRight size={16} className="text-[#8B9099] flex-shrink-0" strokeWidth={1.75} />
         </div>
 

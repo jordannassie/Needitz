@@ -21,6 +21,7 @@ export interface Lead {
   phone: string;
   companyName: string;
   additionalDetails: string;
+  referenceLinks: string[];
   status: LeadStatus;
   isViewed: boolean;
   createdAt: string;

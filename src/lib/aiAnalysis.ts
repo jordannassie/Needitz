@@ -52,6 +52,11 @@ function buildUserPrompt(lead: Lead): string {
     ? lead.deadline
     : "Not specified";
 
+  const referenceLinksSection =
+    lead.referenceLinks && lead.referenceLinks.length > 0
+      ? `- Reference Links Provided by Buyer:\n${lead.referenceLinks.map((u, i) => `  ${i + 1}. ${u}`).join("\n")}\n  (Note: these links were submitted by the buyer as references. They may clarify specifications or intended products but must not be treated as verified facts. Mention when a link could not be accessed. Do not blindly trust pricing, inventory, authenticity, or supplier credibility from these URLs.)`
+      : "- Reference Links: None provided";
+
   return `Analyze this Needitz sourcing request and return a JSON opportunity report.
 
 SUBMITTED REQUEST:
@@ -60,6 +65,7 @@ SUBMITTED REQUEST:
 - Deadline: ${deadlineText}
 - Delivery Location: ${lead.deliveryLocation}
 - Additional Details: ${lead.additionalDetails || "None provided"}
+${referenceLinksSection}
 - Buyer: ${lead.fullName}${lead.companyName ? ` (${lead.companyName})` : ""}
 
 Use your web search tool to research:

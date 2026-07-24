@@ -27,9 +27,10 @@ function hydrateLead(raw: unknown): Lead {
   return {
     ...defaults,
     ...lead,
-    // Ensure array fields are never undefined
+    // Ensure array fields are never undefined (backfills old leads)
     manualSuppliers: lead.manualSuppliers ?? [],
     researchChecklist: lead.researchChecklist ?? [],
+    referenceLinks: lead.referenceLinks ?? [],
   };
 }
 

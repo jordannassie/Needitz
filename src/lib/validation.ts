@@ -41,8 +41,16 @@ export const step5Schema = z.object({
   company_name: z.string().max(200).optional(),
 });
 
+// Validates the reference_links_raw field (raw multiline textarea string).
+// Parsing into a clean string[] is done in the API route after validation.
+export const referenceLinkSchema = z
+  .string()
+  .max(2000, "Reference links must be 2,000 characters or fewer.")
+  .optional();
+
 export const step6Schema = z.object({
   additional_details: z.string().max(300, "Must be 300 characters or fewer.").optional(),
+  reference_links_raw: referenceLinkSchema,
 });
 
 export const fullRequestSchema = step1Schema
@@ -67,3 +75,51 @@ export const contactSchema = z.object({
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
+
+// ─── Reference link utilities ─────────────────────────────────────────────
+
+/** Allowed protocols for reference links. */
+const SAFE_PROTOCOLS = new Set(["http:", "https:"]);
+
+/** Parse raw multiline text into a validated, clean URL array.
+ *  Returns { links, error } — error is set when any line is invalid. */
+export function parseReferenceLinks(raw: string | undefined): {
+  links: string[];
+  error: string | null;
+} {
+  if (!raw || raw.trim() === "") return { links: [], error: null };
+
+  const lines = raw
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  if (lines.length > 10) {
+    return { links: [], error: "A maximum of 10 reference links is allowed." };
+  }
+
+  const invalid: string[] = [];
+  const links: string[] = [];
+
+  for (const line of lines) {
+    try {
+      const url = new URL(line);
+      if (!SAFE_PROTOCOLS.has(url.protocol)) {
+        invalid.push(line);
+      } else {
+        links.push(url.href);
+      }
+    } catch {
+      invalid.push(line);
+    }
+  }
+
+  if (invalid.length > 0) {
+    return {
+      links: [],
+      error: "Please enter valid web links beginning with http:// or https://.",
+    };
+  }
+
+  return { links, error: null };
+}

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { fullRequestSchema } from "@/lib/validation";
+import { fullRequestSchema, parseReferenceLinks } from "@/lib/validation";
 import { isProhibitedRequest } from "@/lib/prohibited";
 import { generateRequestNumber } from "@/lib/requestId";
 import { sanitizeRecord } from "@/lib/sanitize";
@@ -40,6 +40,14 @@ export async function POST(req: NextRequest) {
 
   const data = sanitizeRecord(parsed.data) as typeof parsed.data;
 
+  // Parse and validate reference links server-side (extra safety beyond client validation)
+  const { links: referenceLinks, error: linkError } = parseReferenceLinks(
+    data.reference_links_raw
+  );
+  if (linkError) {
+    return NextResponse.json({ success: false, error: linkError }, { status: 400 });
+  }
+
   const combinedText = `${data.item_request} ${data.additional_details ?? ""}`;
   if (isProhibitedRequest(combinedText)) {
     return NextResponse.json(
@@ -64,6 +72,7 @@ export async function POST(req: NextRequest) {
     phone: data.phone,
     companyName: data.company_name ?? "",
     additionalDetails: data.additional_details ?? "",
+    referenceLinks,
     status: "new",
     isViewed: false,
     createdAt: now,
